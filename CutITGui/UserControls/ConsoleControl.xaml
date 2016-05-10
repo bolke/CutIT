@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:CutITGui.UserControls"
              mc:Ignorable="d" MinWidth="100" MinHeight="100"
              DataContext="{Binding ConsoleViewModel, Source={StaticResource Locator}}">
-    <Grid d:LayoutOverrides="TopMargin, BottomMargin">
+    <Grid d:LayoutOverrides="TopMargin, BottomMargin" Visibility="{Binding Visibility}">
         <TextBox x:Name="tbxInput" TextWrapping="WrapWithOverflow" AcceptsReturn="True" Text="{Binding ConsoleInput, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" FontSize="11" Height="18" VerticalAlignment="Bottom" TabIndex="501">
             <TextBox.InputBindings>
                 <KeyBinding Command="{Binding InputCommand}" Key="Return"/>

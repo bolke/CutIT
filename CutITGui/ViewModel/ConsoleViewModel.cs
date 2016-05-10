@@ -8,10 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows;
 
 namespace CutITGui.ViewModel
 {
-    public class ConsoleViewModel:ViewModelBase
+    public class ConsoleViewModel:TabViewModel
     {
         ICommand _inputCommand = null;
         string _consoleInput = "";
@@ -34,6 +35,7 @@ namespace CutITGui.ViewModel
         {            
             _tcpGrblClient = ViewModelLocator.TcpGrblClient;
             _messageViewModel = ViewModelLocator.MessageViewModel;
+            Visibility = Visibility.Visible;
         }        
 
         public ICommand InputCommand { get { if (_inputCommand == null) _inputCommand = new RelayCommand(DoInputCommand); return _inputCommand; } }
