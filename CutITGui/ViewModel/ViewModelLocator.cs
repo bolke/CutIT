@@ -7,7 +7,6 @@ namespace CutITGui.ViewModel
 {
     public class ViewModelLocator
     {
-        
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -17,6 +16,7 @@ namespace CutITGui.ViewModel
             SimpleIoc.Default.Register<ActiveStatusViewModel>();
             SimpleIoc.Default.Register<ConsoleViewModel>();
             SimpleIoc.Default.Register<ConnectViewModel>();
+            SimpleIoc.Default.Register<ScreenTabViewModel>();
             SimpleIoc.Default.Register<MessageViewModel>(true);
         }
         
@@ -50,6 +50,10 @@ namespace CutITGui.ViewModel
             get { return SimpleIoc.Default.GetInstance<MessageViewModel>(); }
         }
 
+        public static ScreenTabViewModel ScreenTabViewModel
+        {
+            get { return SimpleIoc.Default.GetInstance<ScreenTabViewModel>(); }
+        }
         public static void Cleanup()
         {
         }

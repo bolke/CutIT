@@ -87,11 +87,18 @@
     <Compile Include="UserControls\ConsoleControl.xaml.cs">
       <DependentUpon>ConsoleControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\FileControl.xaml.cs">
+      <DependentUpon>FileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ScreenTabControl.xaml.cs">
+      <DependentUpon>ScreenTabControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ActiveStatusViewModel.cs" />
     <Compile Include="ViewModel\ConnectViewModel.cs" />
     <Compile Include="ViewModel\ConsoleViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
+    <Compile Include="ViewModel\ScreenTabViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -114,6 +121,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ConsoleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\FileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ScreenTabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
