@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="CutITGui.UserControls.ConsoleControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CutITGui.UserControls"
+             mc:Ignorable="d" MinWidth="100" MinHeight="100">
+    <Grid d:LayoutOverrides="TopMargin, BottomMargin">
+        <TextBox x:Name="tbxInput" TextWrapping="Wrap" BorderThickness="0" FontSize="11" Height="18" VerticalAlignment="Bottom" />
+        <TextBox x:Name="tbxOutput" TextWrapping="Wrap" BorderThickness="0" Margin="0,0,0,18" FontSize="11" IsReadOnly="True"/>
+        <Border BorderBrush="Black" BorderThickness="1,1,1,0" Margin="0,0,0,18"/>
+        <Border BorderBrush="Black" BorderThickness="1" Height="18" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</UserControl>
