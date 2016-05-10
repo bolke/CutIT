@@ -90,6 +90,9 @@
     <Compile Include="UserControls\FileControl.xaml.cs">
       <DependentUpon>FileControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\FileMenuControl.xaml.cs">
+      <DependentUpon>FileMenuControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ScreenTabControl.xaml.cs">
       <DependentUpon>ScreenTabControl.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\FileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\FileMenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
