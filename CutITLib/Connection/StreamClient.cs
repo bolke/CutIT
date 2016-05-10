@@ -167,7 +167,7 @@ namespace CutIT.Connection
             {
                 isRunning = false;
                 //TODO dangerous loops, create an escape clause
-                while (writeStream != null || readStream != null) ;
+                while (writeStream != null && readStream != null) ;
                 return true;
             }
             return false;

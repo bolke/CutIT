@@ -1,5 +1,6 @@
 ﻿using CutIT.GRBL;
 using CutIT.Messages;
+using CutITGui.Messages;
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace CutITGui.ViewModel
             {
                 if(_statusRequest == null)
                 {
-                    _statusRequest = new GrblRequest();
+                    _statusRequest = new GuiRequest();
                     _statusRequest.SetContent("?");
                     if (!ViewModelLocator.TcpGrblClient.Add(_statusRequest))
                         _statusRequest = null;
@@ -40,6 +41,7 @@ namespace CutITGui.ViewModel
                 {
                     ViewModelLocator.GrblSettings.Parse(_statusRequest.Response);
                     RaiseAllProperties();
+                    _statusRequest = null;
                 }
             }
             _statusTimer.Start();

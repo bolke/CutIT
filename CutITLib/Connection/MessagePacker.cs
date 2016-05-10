@@ -152,7 +152,10 @@ namespace CutIT.Connection
                     if (_requestDoing.IsValid && !_requestDoing.IsStamped)
                     {
                         _requestDoing.Stamp();
-                        _txData.Enqueue((_requestDoing.Content + "\n").ToCharArray());
+                        if(_requestDoing.IsSpecial)
+                            _txData.Enqueue((_requestDoing.Content).ToCharArray());
+                        else
+                            _txData.Enqueue((_requestDoing.Content + "\n").ToCharArray());
                         _requestCancelSource.Dispose();
                         _requestCancelSource = new CancellationTokenSource();
                         //_requestCancelSource.CancelAfter(RequestTimeout);

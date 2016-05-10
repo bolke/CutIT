@@ -75,6 +75,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Messages\GuiRequest.cs" />
+    <Compile Include="Messages\UserRequest.cs" />
+    <Compile Include="TextBoxBehaviour.cs" />
     <Compile Include="UserControls\ActiveStatusControl.xaml.cs">
       <DependentUpon>ActiveStatusControl.xaml</DependentUpon>
     </Compile>
