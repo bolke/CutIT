@@ -1,6 +1,7 @@
 ﻿using CutIT.GRBL;
 using CutIT.Messages;
 using CutIT.Utility;
+using CutITGui.Messages;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -44,7 +45,10 @@ namespace CutITGui.ViewModel
             {
                 foreach(GrblResponse response in e.NewItems)
                 {
-                    ConsoleViewModel.ConsoleOutput += response.Content + "\n";
+                    if (response.Request != null && (response.Request as GuiRequest) == null)
+                    {
+                        ConsoleViewModel.ConsoleOutput += response.Content + "\n";
+                    }
                 }
             }
         }
@@ -60,7 +64,8 @@ namespace CutITGui.ViewModel
             {
                 foreach (GrblRequest request in e.NewItems)
                 {
-                    ConsoleViewModel.ConsoleOutput += request.Content + "\n";
+                    if(!(request is GuiRequest))
+                        ConsoleViewModel.ConsoleOutput += request.Content + "\n";
                 }
             }
         }
