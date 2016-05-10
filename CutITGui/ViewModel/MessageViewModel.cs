@@ -44,7 +44,7 @@ namespace CutITGui.ViewModel
             {
                 foreach(GrblResponse response in e.NewItems)
                 {
-                    ConsoleViewModel.ConsoleOutput += response.Content + "\n\r";
+                    ConsoleViewModel.ConsoleOutput += response.Content + "\n";
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace CutITGui.ViewModel
             {
                 foreach (GrblRequest request in e.NewItems)
                 {
-                    ConsoleViewModel.ConsoleOutput += request.Content + "\n\r";
+                    ConsoleViewModel.ConsoleOutput += request.Content + "\n";
                 }
             }
         }

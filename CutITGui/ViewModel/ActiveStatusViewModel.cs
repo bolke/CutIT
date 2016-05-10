@@ -40,6 +40,7 @@ namespace CutITGui.ViewModel
                 {
                     ViewModelLocator.GrblSettings.Parse(_statusRequest.Response);
                     RaiseAllProperties();
+                    _statusRequest = null;
                 }
             }
             _statusTimer.Start();
