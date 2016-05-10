@@ -3,6 +3,7 @@ using CutIT.Messages;
 using CutIT.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,10 @@ namespace CutITGui.ViewModel
         ConcurrentObservableCollection<GrblRequest> _requestsRejected;
         ConcurrentObservableCollection<GrblRequest> _specialRequests;
         ConcurrentObservableCollection<GrblResponse> _responses;
+
+        ConsoleViewModel _consoleViewModel;
+
+        ConsoleViewModel ConsoleViewModel { get { if (_consoleViewModel == null) _consoleViewModel = ViewModelLocator.ConsoleViewModel; return _consoleViewModel; } }
 
         public MessageViewModel()
         {
@@ -33,19 +38,31 @@ namespace CutITGui.ViewModel
             _tcpGrblClient.Responses.CollectionChanged += Responses_CollectionChanged;
         }
         
-        private void Responses_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Responses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //responses ready to show 
+            if(e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach(GrblResponse response in e.NewItems)
+                {
+                    ConsoleViewModel.ConsoleOutput += response.Content + "\n\r";
+                }
+            }
         }
 
-        private void RequestsRejected_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void RequestsRejected_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {            
             //rejected requests, ready for inspection
         }
 
-        private void RequestsDone_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {            
-            //finished requests
+        private void RequestsDone_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (GrblRequest request in e.NewItems)
+                {
+                    ConsoleViewModel.ConsoleOutput += request.Content + "\n\r";
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CutIT.GRBL;
+using CutIT.Messages;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -39,7 +40,7 @@ namespace CutITGui.ViewModel
 
         public void DoInputCommand()
         {
-            Console.WriteLine(_consoleInput);
+            _tcpGrblClient.Add(_consoleInput);            
             ConsoleInput = "";
         }
     }
