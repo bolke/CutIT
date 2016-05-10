@@ -23,20 +23,24 @@ namespace CutITGui.ViewModel
         private void DoShowConsole()
         {
             ViewModelLocator.ConsoleViewModel.Show();
+            ViewModelLocator.FileViewModel.Hide();
         }
 
         private void DoShowFile()
         {
+            ViewModelLocator.FileViewModel.Show();
             ViewModelLocator.ConsoleViewModel.Hide();
         }
 
         private void DoShowSettings()
         {
+            ViewModelLocator.FileViewModel.Hide();
             ViewModelLocator.ConsoleViewModel.Hide();
         }
 
         private void DoShowGrbl()
         {
+            ViewModelLocator.FileViewModel.Hide();
             ViewModelLocator.ConsoleViewModel.Hide();
         }
     

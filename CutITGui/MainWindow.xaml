@@ -15,7 +15,8 @@
         <UserControls:ConsoleControl Margin="10,10,115,10" Width="Auto"/>
         <UserControls:ActiveStatusControl Margin="0,10,10,0" HorizontalAlignment="Right" d:LayoutOverrides="Width, Height" VerticalAlignment="Top"/>
         <UserControls:ConnectControl HorizontalAlignment="Right" Margin="0,0,10,10" d:LayoutOverrides="Width" Height="51" VerticalAlignment="Bottom"/>
-        <UserControls:ScreenTabControl HorizontalAlignment="Left" Margin="477,101,0,0" VerticalAlignment="Top"/>
+        <UserControls:ScreenTabControl HorizontalAlignment="Right" Margin="0,101,10,0" VerticalAlignment="Top"/>
+        <UserControls:FileControl Margin="10,10,115,10" Width="Auto" Height="Auto"/>
 
     </Grid>
 </Window>

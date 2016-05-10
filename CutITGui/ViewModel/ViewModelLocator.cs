@@ -17,6 +17,7 @@ namespace CutITGui.ViewModel
             SimpleIoc.Default.Register<ConsoleViewModel>();
             SimpleIoc.Default.Register<ConnectViewModel>();
             SimpleIoc.Default.Register<ScreenTabViewModel>();
+            SimpleIoc.Default.Register<FileViewModel>();
             SimpleIoc.Default.Register<MessageViewModel>(true);
         }
         
@@ -53,6 +54,11 @@ namespace CutITGui.ViewModel
         public static ScreenTabViewModel ScreenTabViewModel
         {
             get { return SimpleIoc.Default.GetInstance<ScreenTabViewModel>(); }
+        }
+
+        public static FileViewModel FileViewModel
+        {
+            get { return SimpleIoc.Default.GetInstance<FileViewModel>(); }
         }
         public static void Cleanup()
         {

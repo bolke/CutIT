@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CutITGui.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             mc:Ignorable="d" Width="100" Height="100"
+             DataContext="{Binding FileViewModel, Source={StaticResource Locator}}">
+    <Grid Margin="0,0,0,0"  Visibility="{Binding Visibility}">
+        <TextBox x:Name="tbxFile" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" BorderThickness="0" Margin="0,0,0,0" FontSize="11"/>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,0,0"/>
     </Grid>
 </UserControl>
