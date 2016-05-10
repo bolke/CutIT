@@ -20,6 +20,7 @@ namespace CutIT.GRBL
         {
             get { return _tcpClient == null ? false : _tcpClient.Connected; }
         }
+
         public bool Start(string hostname, int port)
         {
             _tcpClient = new TcpClient();
