@@ -18,6 +18,5 @@
         <UserControls:ScreenTabControl HorizontalAlignment="Right" Margin="0,101,10,0" VerticalAlignment="Top"/>
         <UserControls:FileControl Margin="10,10,115,10" Width="Auto" Height="Auto"/>
         <UserControls:FileMenuControl HorizontalAlignment="Right" Margin="0,189,10,0" VerticalAlignment="Top" Height="169"/>
-
     </Grid>
 </Window>

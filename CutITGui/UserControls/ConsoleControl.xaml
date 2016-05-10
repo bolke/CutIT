@@ -8,12 +8,12 @@
              mc:Ignorable="d" MinWidth="100" MinHeight="100"
              DataContext="{Binding ConsoleViewModel, Source={StaticResource Locator}}">
     <Grid d:LayoutOverrides="TopMargin, BottomMargin" Visibility="{Binding Visibility}">
-        <TextBox x:Name="tbxInput" TextWrapping="WrapWithOverflow" AcceptsReturn="True" Text="{Binding ConsoleInput, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" FontSize="11" Height="18" VerticalAlignment="Bottom" TabIndex="501">
+        <TextBox x:Name="tbxInput" TextWrapping="WrapWithOverflow" AcceptsReturn="True" Text="{Binding ConsoleInput, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" FontSize="11" Height="18" VerticalAlignment="Bottom" TabIndex="501" FontFamily="Lucida Console">
             <TextBox.InputBindings>
                 <KeyBinding Command="{Binding InputCommand}" Key="Return"/>
             </TextBox.InputBindings>    
         </TextBox>
-        <TextBox x:Name="tbxOutput" gui:TextBoxBehaviour.ScrollOnTextChanged="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Text="{Binding ConsoleOutput, Mode=OneWay}"  BorderThickness="0" Margin="0,0,0,18" FontSize="11" IsReadOnly="True" TabIndex="500"/>
+        <TextBox x:Name="tbxOutput" FontFamily="Lucida Console" gui:TextBoxBehaviour.ScrollOnTextChanged="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Text="{Binding ConsoleOutput, Mode=OneWay}"  BorderThickness="0" Margin="0,0,0,18" FontSize="11" IsReadOnly="True" TabIndex="500"/>
         <Border BorderBrush="Black" BorderThickness="1,1,1,0" Margin="0,0,0,18"/>
         <Border BorderBrush="Black" BorderThickness="1" Height="18" VerticalAlignment="Bottom"/>
     </Grid>
