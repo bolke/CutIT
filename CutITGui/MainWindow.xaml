@@ -9,7 +9,7 @@
         Title="CutIT" Height="600" MinHeight="400" Width="800" MinWidth="500" WindowStartupLocation="CenterScreen" >
     <Grid Margin="0,0,0,0">
         <Grid.LayoutTransform>
-            <ScaleTransform ScaleX="2" ScaleY="2" />
+            <ScaleTransform ScaleX="1.35" ScaleY="1.35" />
         </Grid.LayoutTransform>
 
         <UserControls:ConsoleControl Margin="10,10,115,10" Width="Auto"/>
