@@ -42,9 +42,9 @@ namespace CutITGui.ViewModel
                 if (int.TryParse(_port, out port))
                 {
                     _tcpGrblClient.Start(_address, port);
-                }
-                RaiseAllProperties();
+                }                
             }
+            RaiseAllProperties();
         }
 
         private void RaiseAllProperties()
