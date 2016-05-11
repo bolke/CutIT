@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              Height="100" Width="100"
              DataContext="{Binding FileViewModel, Source={StaticResource Locator}}">
-    <Grid Visibility="{Binding Visibility}">
+    <Grid Visibility="{Binding Visibility}">    
         <Button x:Name="btnOpenFile" Content="Open File" Command="{Binding OpenFileCommand}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" VerticalAlignment="Top" BorderThickness="1" FontSize="11" BorderBrush="Black" Padding="0" Background="#FF5B5B5B" Height="17" FontWeight="Medium" HorizontalAlignment="Stretch"/>
+        <Button x:Name="btnExecuteFile" Content="Execute File" Command="{Binding ExecuteFileCommand}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" VerticalAlignment="Top" BorderThickness="1" FontSize="11" BorderBrush="Black" Padding="0" Background="#FF5B5B5B" Height="17" FontWeight="Medium" HorizontalAlignment="Stretch" Margin="0,22,0,0"/>
     </Grid>
 </UserControl>

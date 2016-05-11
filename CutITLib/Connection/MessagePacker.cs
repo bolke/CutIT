@@ -23,15 +23,14 @@ namespace CutIT.Connection
         public ConcurrentObservableCollection<GrblResponse> Responses { get; protected set; }             
         public ConcurrentObservableCollection<GrblRequest> SpecialRequests { get; protected set; }
         public ConcurrentObservableCollection<GrblRequest> RequestsRejected { get; protected set; }
-
-        public bool PauseOnReject { get; set; }
-        public int RequestTimeout { get; set; }
-        public bool IsPaused { get; protected set; }
+        
+        public virtual bool PauseOnReject { get; set; }
+        public virtual int RequestTimeout { get; set; }
+        public virtual bool IsPaused { get; protected set; }
         public virtual bool IsRunning { get; set; }        
         public virtual bool SaveRejectedRequests { get; set; }
-        public bool AllowSpecialWhenHalted { get; set; }
+        public virtual bool AllowSpecialWhenHalted { get; set; }
 
-        private bool isRunning = false;
         private GrblRequest _requestDoing = null;
         private GrblResponse _responseDoing = null;           
         
@@ -158,7 +157,6 @@ namespace CutIT.Connection
                             _txData.Enqueue((_requestDoing.Content + "\n").ToCharArray());
                         _requestCancelSource.Dispose();
                         _requestCancelSource = new CancellationTokenSource();
-                        //_requestCancelSource.CancelAfter(RequestTimeout);
                         result = true;
                     }
                     if (_requestDoing.IsFinished)

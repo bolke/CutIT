@@ -1,4 +1,6 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using CutIT.GRBL;
+using CutITGui.Messages;
+using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace CutITGui.ViewModel
     public class FileViewModel:TabViewModel
     {
         string _fileContent = "";
+        
         public string FileContent
         {
             get { return _fileContent; }
@@ -27,22 +30,44 @@ namespace CutITGui.ViewModel
 
         ICommand _openFileCommand;
         public ICommand OpenFileCommand { get { if (_openFileCommand == null) _openFileCommand = new RelayCommand(DoOpenFileCommand); return _openFileCommand; } }
-        void DoOpenFileCommand()
+
+        async void DoOpenFileCommand()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            openFileDialog.Filter = "GCode files (*.g *.nc)|*.g;*.nc|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
+            await Task.Run(() =>
             {
-                FileContent = "";
-                FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.Open);
-                StreamReader streamReader = new StreamReader(fileStream);
-                while (!streamReader.EndOfStream)
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+                openFileDialog.Filter = "GCode files (*.g *.nc)|*.g;*.nc|All files (*.*)|*.*";
+                if (openFileDialog.ShowDialog() == true)
                 {
-                    FileContent += streamReader.ReadLine() + "\n";
+                    FileContent = "";
+                    FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.Open);
+                    StreamReader streamReader = new StreamReader(fileStream);
+                    while (!streamReader.EndOfStream)
+                    {
+                        FileContent += streamReader.ReadLine() + "\n";
+                    }
+                    fileStream.Close();
                 }
-                fileStream.Close();
-            }
+            });
+        }
+
+        ICommand _executeFileCommand;
+        public ICommand ExecuteFileCommand { get { if (_executeFileCommand == null) _executeFileCommand = new RelayCommand(DoExecuteFileCommand); return _executeFileCommand; } }
+
+        async void DoExecuteFileCommand()
+        {
+            await Task.Run(() =>
+            {
+                string[] lines = FileContent.Split('\n');
+                TcpGrblClient tcpGrblClient = ViewModelLocator.TcpGrblClient;
+                foreach (string line in lines)
+                {
+                    UserRequest request = new UserRequest();
+                    request.SetContent(line);
+                    tcpGrblClient.Add(request);
+                }
+            });
         }
     }
 }

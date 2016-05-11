@@ -6,8 +6,16 @@
              xmlns:local="clr-namespace:CutITGui.UserControls"
              mc:Ignorable="d" Width="100" Height="100"
              DataContext="{Binding FileViewModel, Source={StaticResource Locator}}">
-    <Grid Margin="0,0,0,0"  Visibility="{Binding Visibility}">
-        <TextBox x:Name="tbxFile" FontFamily="Lucida Console" AcceptsReturn="True" Text="{Binding FileContent}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" BorderThickness="0" Margin="0,0,0,0" FontSize="11"/>
+    <Grid Margin="0,0,0,0" Visibility="{Binding Visibility}"  >
+        <!--<TextBox x:Name="tbxFile" FontFamily="Lucida Console" AcceptsReturn="True" Text="{Binding FileContent}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" BorderThickness="0" Margin="0,0,0,0" FontSize="11"/>
+        -->
+        <RichTextBox x:Name="rtb" Margin="0,0,0,0">
+            <FlowDocument>
+                <Paragraph>
+                    <Run FontFamily="Lucida Console" Text="{Binding FileContent}"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
         <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,0,0"/>
     </Grid>
 </UserControl>
