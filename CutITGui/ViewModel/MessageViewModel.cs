@@ -13,7 +13,7 @@ namespace CutITGui.ViewModel
 {
     public class MessageViewModel
     {
-        TcpGrblClient _tcpGrblClient;
+        GrblClient _grblClient = null;
         ConcurrentObservableCollection<GrblRequest> _requestsDone;
         ConcurrentObservableCollection<GrblRequest> _requestsToDo;
         ConcurrentObservableCollection<GrblRequest> _requestsRejected;
@@ -26,17 +26,17 @@ namespace CutITGui.ViewModel
 
         public MessageViewModel()
         {
-            _tcpGrblClient = ViewModelLocator.TcpGrblClient;
+            _grblClient = ViewModelLocator.GrblClient;
 
-            _requestsToDo = _tcpGrblClient.RequestsToDo;
-            _requestsDone = _tcpGrblClient.RequestsDone;
-            _requestsRejected = _tcpGrblClient.RequestsRejected;
-            _specialRequests = _tcpGrblClient.SpecialRequests;
-            _responses = _tcpGrblClient.Responses;
+            _requestsToDo = _grblClient.RequestsToDo;
+            _requestsDone = _grblClient.RequestsDone;
+            _requestsRejected = _grblClient.RequestsRejected;
+            _specialRequests = _grblClient.SpecialRequests;
+            _responses = _grblClient.Responses;
             
-            _tcpGrblClient.RequestsDone.CollectionChanged += RequestsDone_CollectionChanged;
-            _tcpGrblClient.RequestsRejected.CollectionChanged += RequestsRejected_CollectionChanged;
-            _tcpGrblClient.Responses.CollectionChanged += Responses_CollectionChanged;
+            _grblClient.RequestsDone.CollectionChanged += RequestsDone_CollectionChanged;
+            _grblClient.RequestsRejected.CollectionChanged += RequestsRejected_CollectionChanged;
+            _grblClient.Responses.CollectionChanged += Responses_CollectionChanged;
         }
         
         private void Responses_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

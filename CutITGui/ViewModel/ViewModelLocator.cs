@@ -11,13 +11,14 @@ namespace CutITGui.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<TcpGrblClient>();            
-            SimpleIoc.Default.Register<GrblClient>(() => { return SimpleIoc.Default.GetInstance<TcpGrblClient>(); }, "GrblClient");
-            SimpleIoc.Default.Register<GrblSettings>();
+            SimpleIoc.Default.Register<GrblClient>(() => { return SimpleIoc.Default.GetInstance<TcpGrblClient>(); });
+            SimpleIoc.Default.Register<GrblSettings>(() => { return SimpleIoc.Default.GetInstance<TcpGrblClient>().GrblSettings; }); 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ActiveStatusViewModel>();
             SimpleIoc.Default.Register<ConsoleViewModel>();
             SimpleIoc.Default.Register<ConnectViewModel>();
             SimpleIoc.Default.Register<ScreenTabViewModel>();
+            SimpleIoc.Default.Register<SettingsViewModel>();
             SimpleIoc.Default.Register<FileViewModel>();
             SimpleIoc.Default.Register<MessageViewModel>(true);
         }
@@ -32,6 +33,11 @@ namespace CutITGui.ViewModel
             get { return SimpleIoc.Default.GetInstance<TcpGrblClient>(); }
         }
         
+        public static SettingsViewModel SettingsViewModel
+        {
+            get { return SimpleIoc.Default.GetInstance<SettingsViewModel>(); }
+        }
+
         public static GrblClient GrblClient
         {
             get { return SimpleIoc.Default.GetInstance<GrblClient>(); }
