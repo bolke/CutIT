@@ -7,17 +7,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace CutITGui.ViewModel
 {
-    public class FileViewModel:TabViewModel
+    public class FileViewModel : TabViewModel
     {
+        CancellationTokenSource _cancelFileExecution = null;
         string _fileContent = "";
-        
-        public string FileContent
+        bool _executingFile = false;
+
+        public virtual bool ExecutingFile{get{return _executingFile;}set{ if (Set("ExecutingFile", ref _executingFile, value)) RaisePropertyChanged("FileExecuteText"); }}
+        public string FileExecuteText { get { return _executingFile ? "Stop File" : "Execute File"; } }
+
+        public virtual string FileContent
         {
             get { return _fileContent; }
             set { Set("FileContent", ref _fileContent, value); }
@@ -57,17 +63,38 @@ namespace CutITGui.ViewModel
 
         async void DoExecuteFileCommand()
         {
-            await Task.Run(() =>
+            if (!ExecutingFile)
             {
-                string[] lines = FileContent.Split('\n');
-                TcpGrblClient tcpGrblClient = ViewModelLocator.TcpGrblClient;
-                foreach (string line in lines)
+                ExecutingFile = true;
+                _cancelFileExecution = new CancellationTokenSource();                
+                await Task.Run(() =>
                 {
-                    UserRequest request = new UserRequest();
-                    request.SetContent(line);
-                    tcpGrblClient.Add(request);
-                }
-            });
+                    TcpGrblClient tcpGrblClient = ViewModelLocator.TcpGrblClient;
+                    if (tcpGrblClient.IsConnected)
+                    {
+                        string[] lines = FileContent.Split('\n');
+                        foreach (string line in lines)
+                        {
+                            UserRequest request = new UserRequest();
+                            request.SetContent(line);
+                            if (tcpGrblClient.Add(request))
+                            {
+                                while (!request.IsFinished && !_cancelFileExecution.IsCancellationRequested)
+                                {
+                                    Task.Delay(10);
+                                }
+                            }
+                            if (_cancelFileExecution.IsCancellationRequested)
+                                break;
+                        }
+                    }
+                });
+                ExecutingFile = false;
+            }
+            else
+            {
+                _cancelFileExecution.Cancel();
+            }
         }
     }
 }

@@ -12,6 +12,8 @@ namespace CutIT.Connection
 {
     public class MessagePacker
     {
+        private List<GrblResponse> _tempResponses = new List<GrblResponse>();
+        private GrblRequest _tempRequestDoing = null;
         private ConcurrentQueue<char[]> _rxData { get; set; }
         private ConcurrentQueue<char[]> _txData { get; set; }
         private CancellationTokenSource _threadCancelSource = null;
@@ -128,7 +130,9 @@ namespace CutIT.Connection
             {
                 GrblRequest specialRequest = SpecialRequests.Pop();
                 if (specialRequest.IsRequestType(GrblRequestEnum.CurrentStatus))
-                    RequestsToDo.Insert(0, specialRequest);
+                {
+                    GetAndSendRequest(specialRequest);                
+                }
                 else
                 {
                     specialRequest.Stamp();
@@ -140,12 +144,15 @@ namespace CutIT.Connection
             return result;
         }
 
-        protected virtual bool GetAndSendRequest()
+        protected virtual bool GetAndSendRequest(GrblRequest request = null)
         {
             bool result = false;
-            if (_requestDoing == null)
+            if (_requestDoing == null || request != null && _tempRequestDoing == null)
             {
-                RequestsToDo.TryDequeue(out _requestDoing);
+                _tempRequestDoing = _requestDoing;
+                _requestDoing = request;
+                if(_requestDoing == null)
+                    RequestsToDo.TryDequeue(out _requestDoing);
                 if (_requestDoing != null)
                 {
                     if (_requestDoing.IsValid && !_requestDoing.IsStamped)
@@ -184,12 +191,35 @@ namespace CutIT.Connection
                     {
                         if (_requestDoing != null)
                         {
-                            _responseDoing.SetRequest(_requestDoing);
-                            if (_requestDoing.SetResponse(_responseDoing))
+                            if (_requestDoing.IsRequestType(GrblRequestEnum.CurrentStatus))
                             {
-                                RequestsDone.Add(_requestDoing);
-                                _requestDoing = null;
+                                if (_responseDoing.IsResponseType(GrblResponseEnum.Status))
+                                {
+                                    _responseDoing.SetRequest(_requestDoing);
+                                    _requestDoing.SetResponse(_responseDoing);
+                                }
+                                else if (_tempRequestDoing != null)
+                                {
+                                    _responseDoing.SetRequest(_tempRequestDoing);
+                                    _tempRequestDoing.SetResponse(_responseDoing);
+                                }
                             }
+                            else
+                            {
+                                _responseDoing.SetRequest(_requestDoing);
+                                _requestDoing.SetResponse(_responseDoing);
+                            }
+                            if (_requestDoing.IsFinished)
+                            {
+                                RequestsDone.Add(_requestDoing);                                
+                                if (_tempRequestDoing != null && _tempRequestDoing.IsFinished)
+                                {
+                                    RequestsDone.Add(_tempRequestDoing);
+                                    _tempRequestDoing = null;
+                                }
+                                _requestDoing = _tempRequestDoing;
+                                _tempRequestDoing = null;
+                            }                            
                         }
                         result++;
                         Responses.Add(_responseDoing);
@@ -199,7 +229,7 @@ namespace CutIT.Connection
             }
             return result;
         }
-        
+       
         protected virtual bool CheckIfCancelRequest()
         {
             if (_requestDoing != null)
