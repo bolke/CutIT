@@ -3,6 +3,8 @@ using CutIT.Utility;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +22,7 @@ namespace CutIT.GRBL
         Check
     }
 
-    public class GrblSettings
+    public class GrblSettings: INotifyPropertyChanged
     {
         protected ConcurrentDictionary<string, string> Settings { get; set; }
         protected ConcurrentDictionary<string, Coordinate> GCodeParameters { get; set; }
@@ -97,6 +99,18 @@ namespace CutIT.GRBL
             LastProbeSuccess = false;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // Create the OnPropertyChanged method to raise the event
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
         public bool Parse(GrblResponse response)
         {
             bool result = false;
@@ -107,8 +121,8 @@ namespace CutIT.GRBL
                     case GrblResponseEnum.Coordinate:
                         if (GCodeParameters.ContainsKey(response.Items[0]))
                         {
+                            OnPropertyChanged("Coordinate " + response.Items[0]);
                             result = GCodeParameters[response.Items[0]].Relocate(response.Items[1], response.Items[2], response.Items[3]);
-
                         }
                         break;
                     case GrblResponseEnum.Probe:
@@ -117,6 +131,7 @@ namespace CutIT.GRBL
                             if (GCodeParameters["PRB"].Relocate(response.Items[0], response.Items[1], response.Items[2]))
                             {
                                 LastProbeSuccess = response.Items[3].Equals("1");
+                                OnPropertyChanged("Probe");
                                 result = true;
                             }
                         }
@@ -127,17 +142,20 @@ namespace CutIT.GRBL
                         {
                             ParserState.Add(new Tuple<string, string>(response.Items[i], response.Items[i + 1]));
                         }
+                        OnPropertyChanged("ParserState");
                         result = true;
                         break;
                     case GrblResponseEnum.StartupBlock:
                         if (response.Items[0].Equals("0"))
                         {
                             StartupBlock1 = response.Items[1];
+                            OnPropertyChanged("StartupBlock0");
                             result = true;
                         }
                         else if (response.Items[0].Equals("1"))
                         {
                             StartupBlock2 = response.Items[1];
+                            OnPropertyChanged("StartupBlock0");
                             result = true;
                         }
                         break;
@@ -145,6 +163,7 @@ namespace CutIT.GRBL
                         if (Settings.ContainsKey(response.Items[0]))
                         {
                             Settings[response.Items[0]] = response.Items[1];
+                            OnPropertyChanged("Setting");
                             result = true;
                         }
                         break;
@@ -152,14 +171,17 @@ namespace CutIT.GRBL
                         GrblState = (GrblStateEnum)Enum.Parse(typeof(GrblStateEnum), response.Items[0], true);
                         MachinePosition.Relocate(response.Items[1], response.Items[2], response.Items[3]);
                         WorkPosition.Relocate(response.Items[4], response.Items[5], response.Items[6]);
+                        OnPropertyChanged("Status");
                         result = true;
                         break;
                     case GrblResponseEnum.ToolLengthOffset:
-                        ToolLengthOffset = double.Parse(response.Items[0]);
+                        ToolLengthOffset = double.Parse(response.Items[0]);                        
+                        OnPropertyChanged("ToolLengthOffset");
                         result = true;
                         break;
                     case GrblResponseEnum.BuildInfo:
-                        BuildInfo = response.Items[0];
+                        BuildInfo = response.Items[0];                        
+                        OnPropertyChanged("BuildInfo");
                         result = true;
                         break;
                 }

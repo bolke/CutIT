@@ -3,6 +3,7 @@ using CutIT.Messages;
 using CutIT.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,11 @@ namespace CutIT.GRBL
 {
     public class GrblClient
     {
+        GrblSettings _grblSettings;
         StreamClient _streamClient;
         MessagePacker _messagePacker;
 
+        public GrblSettings GrblSettings { get { return _grblSettings; } }
         public bool IsRunning { get { return _messagePacker.IsRunning; } }
         public bool IsPaused { get { return _messagePacker.IsPaused; } }
         public ConcurrentObservableCollection<GrblResponse> Responses { get { return _messagePacker.Responses; } }
@@ -28,6 +31,19 @@ namespace CutIT.GRBL
             _streamClient.ReadLines = true;
             _messagePacker = new MessagePacker(_streamClient.RxData, _streamClient.TxData);
             _messagePacker.SaveRejectedRequests = true;
+            _messagePacker.Responses.CollectionChanged += Responses_CollectionChanged;
+            _grblSettings = new GrblSettings();
+        }
+
+        private void Responses_CollectionChanged(object sender,NotifyCollectionChangedEventArgs e)
+        {
+            if(e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach(GrblResponse response in e.NewItems)
+                {
+                    _grblSettings.Parse(response);
+                }
+            }
         }
 
         public GrblClient(Stream stream) : this()
