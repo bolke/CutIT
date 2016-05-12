@@ -48,7 +48,7 @@ namespace CutIT.Messages
         public virtual GrblResponseEnum ResponseType { get { return _responseType; } set { _responseType = value; } }
         public long Duration { get { return (Request != null && Request.IsStamped) ? Timestamp - Request.Timestamp: -1;} }
         public List<string> Items { get { return _items; } }
-        public override bool IsFinished { get { return base.IsFinished && !IsResponseType(GrblResponseEnum.Unknown); } }
+        public override bool IsFinished { get { return base.IsFinished || (IsResponseType(GrblResponseEnum.Unknown) && IsStamped); } }
         public GrblRequest Request { get { return _request; } protected set { _request = value; } }
 
         public virtual bool IsResponseType(GrblResponseEnum compare)
