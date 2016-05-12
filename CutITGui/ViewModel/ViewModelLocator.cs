@@ -10,7 +10,8 @@ namespace CutITGui.ViewModel
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-            SimpleIoc.Default.Register<TcpGrblClient>();
+            SimpleIoc.Default.Register<TcpGrblClient>();            
+            SimpleIoc.Default.Register<GrblClient>(() => { return SimpleIoc.Default.GetInstance<TcpGrblClient>(); }, "GrblClient");
             SimpleIoc.Default.Register<GrblSettings>();
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ActiveStatusViewModel>();
@@ -29,6 +30,11 @@ namespace CutITGui.ViewModel
         public static TcpGrblClient TcpGrblClient
         {
             get { return SimpleIoc.Default.GetInstance<TcpGrblClient>(); }
+        }
+        
+        public static GrblClient GrblClient
+        {
+            get { return SimpleIoc.Default.GetInstance<GrblClient>(); }
         }
 
         public static ConnectViewModel ConnectViewModel

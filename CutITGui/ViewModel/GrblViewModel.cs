@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CutIT.GRBL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,12 @@ namespace CutITGui.ViewModel
 {
     public class GrblViewModel:TabViewModel
     {
+        GrblClient _grblClient = null;
+        
+        public GrblViewModel(GrblClient grblClient)
+        {
+            _grblClient = grblClient;
+        }
+
     }
 }
