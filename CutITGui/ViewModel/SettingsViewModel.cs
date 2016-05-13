@@ -1,4 +1,5 @@
 ﻿using CutIT.GRBL;
+using CutIT.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,19 +11,22 @@ namespace CutITGui.ViewModel
 {
     public class SettingsViewModel : TabViewModel
     {
+        List<Guid> _settings;
         GrblSettings _grblSettings = null;
         string _settingValue = "";
-        public string SettingValue { get { return _settingValue; } set { Set(ref _settingValue, value); } }
-                
+        public string SettingValue { get { return _settingValue; } set { Set(ref _settingValue, value); } }        
+        public List<Guid> Settings { get { return _settings; } set { Set(ref _settings, value); } }
+           
         public SettingsViewModel()
         {
+            _settings = new List<Guid>();
             _grblSettings = ViewModelLocator.GrblSettings;
             _grblSettings.PropertyChanged += _grblSettings_PropertyChanged;
         }
 
         private void _grblSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            
+            _settings.Add(Guid.NewGuid());   
         }
     }
 }
