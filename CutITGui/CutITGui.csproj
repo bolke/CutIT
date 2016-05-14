@@ -103,6 +103,7 @@
     <Compile Include="ViewModel\ConnectViewModel.cs" />
     <Compile Include="ViewModel\ConsoleViewModel.cs" />
     <Compile Include="ViewModel\FileViewModel.cs" />
+    <Compile Include="ViewModel\GrblSettingsViewModel.cs" />
     <Compile Include="ViewModel\GrblViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />

@@ -24,8 +24,8 @@ namespace CutIT.GRBL
 
     public class GrblSettings: INotifyPropertyChanged
     {
-        protected ConcurrentDictionary<string, string> Settings { get; set; }
-        protected ConcurrentDictionary<string, Coordinate> GCodeParameters { get; set; }
+        public ConcurrentDictionary<string, string> Settings { get; protected set; }
+        public ConcurrentDictionary<string, Coordinate> GCodeParameters { get; protected set; }
         protected List<Tuple<string, string>> ParserState { get; set; }
 
         public GrblStateEnum GrblState { get; protected set; }
@@ -36,7 +36,7 @@ namespace CutIT.GRBL
         public string StartupBlock1 { get; protected set; }
         public string StartupBlock2 { get; protected set; }
         public string BuildInfo { get; protected set; }
-
+        public string GetSetting(string key) { return Settings.ContainsKey(key)? Settings[key]:""; }
         public GrblSettings()
         {
             Settings = new ConcurrentDictionary<string, string>();

@@ -15,8 +15,7 @@ namespace CutITGui.ViewModel
         GrblSettings _grblSettings = null;
         string _settingValue = "";
         public string SettingValue { get { return _settingValue; } set { Set(ref _settingValue, value); } }        
-        public List<Guid> Settings { get { return _settings; } set { Set(ref _settings, value); } }
-           
+          
         public SettingsViewModel()
         {
             _settings = new List<Guid>();
@@ -25,8 +24,7 @@ namespace CutITGui.ViewModel
         }
 
         private void _grblSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            _settings.Add(Guid.NewGuid());   
+        {  
         }
     }
 }

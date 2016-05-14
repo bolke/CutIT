@@ -27,6 +27,11 @@ namespace CutIT.Utility
             Z = z;
         }
 
+        public Coordinate(Coordinate coordinate):this(coordinate.X,coordinate.Y,coordinate.Z)
+        {
+
+        }
+
         public bool Relocate(Coordinate other)
         {
             if (other != null)
