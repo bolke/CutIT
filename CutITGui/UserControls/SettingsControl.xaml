@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CutITGui.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="100"
-             DataContext="{Binding SettingsViewModel, Source={StaticResource Locator}}" Width="100" >
-    <Grid Visibility="{Binding Visibility}">
-        <TextBox x:Name="tbxSettingValue" TextWrapping="Wrap" Text="{Binding SettingValue}" BorderThickness="0" FontSize="11" TabIndex="600" Margin="0,82,0,0"/>
-        <Border BorderBrush="Black" BorderThickness="1" Margin="0,82,0,0"/>
-        <ListBox x:Name="lbsSettings" ItemsSource="{Binding Settings}" BorderThickness="1" BorderBrush="Black" Margin="0,0,0,17"/>
+             mc:Ignorable="d"
+             DataContext="{Binding SettingsViewModel, Source={StaticResource Locator}}" Width="305.333" Height="186.667" >
+    <Grid Visibility="{Binding Visibility}" Margin="0,0,-160,-71" HorizontalAlignment="Left" Width="260" Height="171" VerticalAlignment="Top">
+        <TextBox x:Name="tbxSettingValue" TextWrapping="Wrap" Text="{Binding SettingValue}" BorderThickness="0" FontSize="11" TabIndex="600" Height="17" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Margin="0,0,0,71"/>
+        <Border BorderBrush="Black" BorderThickness="1" Height="17" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Margin="0,0,0,71"/>
+        <ListBox x:Name="lbsSettings" ItemsSource="{Binding Settings}" BorderThickness="1" BorderBrush="Black" Margin="0,0,0,87" HorizontalAlignment="Left" Width="100"/>
+        <ListBox x:Name="lbsParameters" ItemsSource="{Binding Settings}" BorderThickness="1" BorderBrush="Black" Margin="99,0,0,71" HorizontalAlignment="Left" Width="117"/>
     </Grid>
 </UserControl>

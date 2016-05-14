@@ -18,6 +18,7 @@ namespace CutITGui.ViewModel
           
         public SettingsViewModel()
         {
+            Visibility = System.Windows.Visibility.Hidden;
             _settings = new List<Guid>();
             _grblSettings = ViewModelLocator.GrblSettings;
             _grblSettings.PropertyChanged += _grblSettings_PropertyChanged;
